@@ -1,0 +1,23 @@
+CHIP PRNG8{
+     /*An 8-bit LFSR is a linear-feedback shift register that 
+     has 8 flip-flops.
+     A well-designed 8-bit LFSR can generate a sequence of
+     up to 255 unique values before repeating.
+     An 8-bit LFSR has the Feedback Polynomial x8 + x6 + x5 + x4 +1 */
+     OUT out[8];
+
+     PARTS:
+     DFF(in=q9, out=q0, out=out[0]);
+     DFF(in=q0, out=q1, out=out[1]);
+     DFF(in=q1, out=q2, out=out[2]);
+     DFF(in=q2, out=q3, out=out[3]);
+     DFF(in=q3, out=q4, out=out[4]);
+     DFF(in=q4, out=q5, out=out[5]);
+     DFF(in=q5, out=q6, out=out[6]);
+     DFF(in=q6, out=q8, out=out[7]);
+
+     XNor(a=q8,b=q5,out=x1);
+     XNor(a=x1,b=q4,out=x2);
+     XNor(a=x2,b=q3,out=q9);
+
+}
